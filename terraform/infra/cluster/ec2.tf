@@ -4,7 +4,6 @@ resource "aws_autoscaling_group" "ecs" {
 
   min_size         = var.cluster_min_size
   max_size         = var.cluster_max_size
-  desired_capacity = var.cluster_desired_capacity
 
   launch_template {
     id      = aws_launch_template.launch_templates.id
@@ -53,7 +52,8 @@ resource "aws_launch_template" "launch_templates" {
   }
   tags = merge(var.tags,
     {
-      Name = "${local.prefix}-${terraform.workspace}-launch-config"
+      Name = "${local.prefix}-${terraform.workspace}-launch-config",
+      AmazonECSManaged = true
     }
   )
 }
