@@ -1,8 +1,8 @@
-project    = "example-wordpress"
+project    = "example-site"
 stack      = "shared-infra"
-aws_region = "eu-south-1"
+aws_region = "eu-west-1"
 tags = {
-  Project     = "example-wordpress"
+  Project     = "example-site"
   Stack       = "shared-infra"
   Creator     = "AlessandroMarino"
   MaintenedBy = "Terraform_AlessandroMarino"
