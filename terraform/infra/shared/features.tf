@@ -1,7 +1,7 @@
 module "basic_infra" {
   source = "git@github.com:alessandromr/terraform.feature.network.git"
 
-  aws_region      = data.aws_region.current.id
+  aws_region      = var.aws_region
   aws_account_id  = data.aws_caller_identity.current.id
   resource_prefix = local.prefix
   env             = terraform.workspace
