@@ -1,8 +1,16 @@
-data "aws_ecs_cluster" "ecs-wordpress" {
-  cluster_name = "${local.prefix}-${terraform.workspace}-${var.cluster_name}"
+resource "aws_ecs_cluster" "ecs_wordpress" {
+  name               = "${local.prefix}-${terraform.workspace}-${var.cluster_name}"
+  capacity_providers = [aws_ecs_capacity_provider.ecs_wordpress.arn]
+
+  setting {
+    name  = "containerInsights"
+    value = "enabled"
+  }
+
+  tags = var.tags
 }
 
-resource "aws_ecs_capacity_provider" "ecs-wordpress" {
+resource "aws_ecs_capacity_provider" "ecs_wordpress" {
   name = "${local.prefix}-${terraform.workspace}-${var.cluster_name}"
 
   auto_scaling_group_provider {
