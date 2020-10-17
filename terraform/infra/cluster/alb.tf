@@ -3,6 +3,7 @@ resource "aws_lb" "load_balancer" {
   internal           = false
   load_balancer_type = "application"
 
+  subnets         = local.public_subnets_ids
   security_groups = [aws_security_group.alb.id]
 
   tags = var.tags
