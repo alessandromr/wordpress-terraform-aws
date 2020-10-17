@@ -1,6 +1,6 @@
-project="example-wordpress"
-stack="cluster"
-aws_region="eu-south-1"
+project    = "example-wordpress"
+stack      = "cluster"
+aws_region = "eu-south-1"
 tags = {
   Project     = "example-wordpress"
   Stack       = "cluster"
@@ -10,10 +10,10 @@ tags = {
 
 #dedicated variables
 
-cluster_name="cluster"
+cluster_name = "cluster"
 
-cluster_min_size=2
-cluster_max_size=3
-cluster_desired_capacity=2
+cluster_min_size         = 2
+cluster_max_size         = 3
+cluster_desired_capacity = 2
 
-instance_type="t3.micro"
+instance_type = "t3.micro"

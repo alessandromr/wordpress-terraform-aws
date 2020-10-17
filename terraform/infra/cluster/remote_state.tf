@@ -6,6 +6,6 @@ locals {
 data "terraform_remote_state" "shared_infra" {
   backend = "local"
   config = {
-      path = "../shared/"
+    path = "../shared/"
   }
 }

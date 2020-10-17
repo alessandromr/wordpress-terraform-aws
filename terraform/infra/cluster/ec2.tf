@@ -2,8 +2,8 @@ resource "aws_autoscaling_group" "ecs" {
   name                = "${local.prefix}-${terraform.workspace}-asg"
   vpc_zone_identifier = local.private_subnets_ids
 
-  min_size         = var.cluster_min_size
-  max_size         = var.cluster_max_size
+  min_size = var.cluster_min_size
+  max_size = var.cluster_max_size
 
   launch_template {
     id      = aws_launch_template.launch_templates.id
@@ -52,7 +52,7 @@ resource "aws_launch_template" "launch_templates" {
   }
   tags = merge(var.tags,
     {
-      Name = "${local.prefix}-${terraform.workspace}-launch-config",
+      Name             = "${local.prefix}-${terraform.workspace}-launch-config",
       AmazonECSManaged = true
     }
   )
@@ -61,7 +61,7 @@ resource "aws_launch_template" "launch_templates" {
 data "template_file" "user_data" {
   template = file("${path.module}/user_data.sh")
   vars = {
-    ClusterName      = "${local.prefix}-${terraform.workspace}-${var.cluster_name}"
+    ClusterName = "${local.prefix}-${terraform.workspace}-${var.cluster_name}"
   }
 }
 

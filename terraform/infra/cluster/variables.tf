@@ -4,17 +4,17 @@ variable "tags" {
 }
 
 variable "project" {
-  type    = string
+  type = string
 }
 
 variable "stack" {
-  type    = string
+  type = string
 }
 
 #dedicated variables
 
 variable "cluster_name" {
-  type    = string
+  type = string
 }
 variable "cluster_min_size" {
   type    = number
@@ -29,5 +29,5 @@ variable "cluster_desired_capacity" {
   default = 1
 }
 variable "instance_type" {
-  type    = string
+  type = string
 }
