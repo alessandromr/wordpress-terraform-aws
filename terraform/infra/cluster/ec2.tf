@@ -43,12 +43,12 @@ resource "aws_launch_template" "launch_templates" {
   # key_name  = var.cluster_instances_key_name
 
   network_interfaces {
-    security_groups             = [aws_security_group.instance.id]
+    security_groups             = [aws_security_group.ecs_instances.id]
     associate_public_ip_address = true
   }
 
   iam_instance_profile {
-    name = aws_iam_instance_profile.instance.name
+    name = aws_iam_instance_profile.ecs_instances.name
   }
   tags = merge(var.tags,
     {
@@ -79,4 +79,28 @@ data "aws_ami" "amazon_linux_2" {
     values = ["amzn2-ami-hvm-*-x86_64-ebs"]
   }
   owners = ["amazon"]
+}
+
+resource "aws_security_group" "ecs_instances" {
+  name        = "${local.prefix}-${terraform.workspace}-ecs-instances-security-group"
+  description = "Allow TLS inbound traffic"
+  vpc_id      = local.vpc_id
+}
+
+resource "aws_security_group_rule" "ecs_allow_inbound_from_alb" {
+  type                     = "ingress"
+  from_port                = 0
+  to_port                  = 0
+  protocol                 = "-1"
+  security_group_id        = aws_security_group.ecs_instances.id
+  source_security_group_id = aws_security_group.alb.id
+}
+
+resource "aws_security_group_rule" "ecs_out" {
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.ecs_instances.id
 }
