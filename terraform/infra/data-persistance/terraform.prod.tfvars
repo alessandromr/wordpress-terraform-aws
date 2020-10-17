@@ -1,5 +1,6 @@
 project="example-wordpress"
 stack="data-persistance"
+aws_region="eu-south-1"
 tags = {
   Project     = "example-wordpress"
   Stack       = "data-persistance"

@@ -1,5 +1,6 @@
 project="example-wordpress"
 stack="cluster"
+aws_region="eu-south-1"
 tags = {
   Project     = "example-wordpress"
   Stack       = "cluster"
