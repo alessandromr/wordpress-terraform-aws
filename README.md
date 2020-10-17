@@ -33,3 +33,8 @@ If the stack has already been deployed and you have a local state ready, you can
 ```bash
     terraform destroy --var-file=terraform.prod.tfvars
 ```
+
+## Errors
+
+The stack is probably not supported on account that still have the old ECS ARN format. Please opt into the new format as advised by AWS.  
+[Reference](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-account-settings.html#ecs-resource-ids)  
