@@ -30,6 +30,13 @@ If the stack has already been deployed and you have a local state ready, you can
 
 ### Destroy
 
+#### Notes:  
+
+To enable cluster scaling with ECS, a parameter: `protect_from_scale_in = true` of autoscaling group is setted to true. This parameter make terraform waits for user to terminate
+instances during `destroy` phase. So is necessary to terminate instances of ASG manually during `destroy` phase.
+
+#### Commands
+
 ```bash
     terraform destroy --var-file=terraform.prod.tfvars
 ```

@@ -1,9 +1,11 @@
-resource "aws_autoscaling_group" "ecs" {
+resource "aws_autoscaling_group" "ecs_instances" {
   name                = "${local.prefix}-${terraform.workspace}-asg"
   vpc_zone_identifier = local.private_subnets_ids
 
   min_size = var.cluster_min_size
   max_size = var.cluster_max_size
+
+  protect_from_scale_in = true
 
   launch_template {
     id      = aws_launch_template.launch_templates.id
