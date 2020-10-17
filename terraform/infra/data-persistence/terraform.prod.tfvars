@@ -1,9 +1,9 @@
 project="example-wordpress"
-stack="data-persistance"
+stack="data-persistence"
 aws_region="eu-south-1"
 tags = {
   Project     = "example-wordpress"
-  Stack       = "data-persistance"
+  Stack       = "data-persistence"
   Creator     = "AlessandroMarino"
   MaintenedBy = "Terraform_AlessandroMarino"
 }
