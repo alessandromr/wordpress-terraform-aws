@@ -1,8 +1,8 @@
-project    = "example-wordpress"
+project    = "example-site"
 stack      = "cluster"
 aws_region = "eu-south-1"
 tags = {
-  Project     = "example-wordpress"
+  Project     = "example-site"
   Stack       = "cluster"
   Creator     = "AlessandroMarino"
   MaintenedBy = "Terraform_AlessandroMarino"
@@ -10,7 +10,7 @@ tags = {
 
 #dedicated variables
 
-cluster_name = "cluster"
+cluster_name = "wordpress"
 
 cluster_min_size         = 2
 cluster_max_size         = 3
