@@ -11,7 +11,7 @@ module "basic_infra" {
   public_subnets_cidr  = ["10.0.0.0/24", "10.0.1.0/24"]
   private_subnets_cidr = ["10.0.2.0/24", "10.0.3.0/24"]
 
-  include_nat_gateway  = true
+  include_nat_gateway = true
 
   tags = var.tags
 }

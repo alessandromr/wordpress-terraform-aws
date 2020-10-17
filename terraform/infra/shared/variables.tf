@@ -4,9 +4,9 @@ variable "tags" {
 }
 
 variable "project" {
-  type    = string
+  type = string
 }
 
 variable "stack" {
-  type    = string
+  type = string
 }
