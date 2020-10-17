@@ -72,14 +72,20 @@ data "aws_ami" "amazon_linux_2" {
   most_recent = true
 
   filter {
-    name   = "owner-alias"
-    values = ["amazon"]
+    name   = "name"
+    values = ["amzn-ami*amazon-ecs-optimized"]
+  }
+  
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
   }
 
   filter {
-    name   = "name"
-    values = ["amzn2-ami-hvm-*-x86_64-ebs"]
+    name   = "virtualization-type"
+    values = ["hvm"]
   }
+
   owners = ["amazon"]
 }
 
