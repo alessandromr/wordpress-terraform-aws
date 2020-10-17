@@ -1,6 +1,6 @@
 project    = "example-site"
 stack      = "cluster"
-aws_region = "eu-south-1"
+aws_region = "eu-west-1"
 tags = {
   Project     = "example-site"
   Stack       = "cluster"
