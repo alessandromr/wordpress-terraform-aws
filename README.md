@@ -5,6 +5,18 @@
 - Terraform 0.13.4 or tfswitch
 - awscli
 
+## Implementations
+
+### Redis
+
+A Redis cluster is implemented and can be used for:
+
+1. Object caching
+2. Session storing
+
+Some WordPress plugins and themes use native PHP sessions, to host WordPress behind a load balancer is necessary to distribuited those sessions.
+Settings about Redis are configured in `php.ini` and natively supported by php and php-redis extension.
+
 ## Deploy guide
 
 ### Workspaces
