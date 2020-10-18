@@ -4,8 +4,10 @@ locals {
 }
 
 data "terraform_remote_state" "shared_infra" {
-  backend = "local"
+  backend = "s3"
   config = {
-      path = "../shared/"
+    bucket = "scalable-wp-onaws"
+    key    = "example-site/${terraform.workspace}/shared-infra"
+    region = "eu-west-1"
   }
 }
