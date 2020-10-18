@@ -1,22 +1,11 @@
-FROM wordpress:5.5.1-php7.2-fpm-alpine
+FROM wordpress:5.5.1-php7.2-fpm
 
-WORKDIR /usr/src/wordpress
+COPY ./redis.ini /$PHP_INI_DIR/conf.d/redis.ini
 
-#Remove useless file
-RUN rm -rf \
-	readme.html \
-	wp-config-sample.php \
-    license.txt
+RUN apt-get update && apt-get install -y vim
 
-#Remove default plugins
-RUN rm -rf \
-    wp-content/plugins/akismet/ \
-    wp-content/plugins/hello.php
+RUN pecl install redis \
+    && docker-php-ext-enable redis \
+    && rm -rf /tmp/pear 
 
-#Remove default unused themes 
-RUN rm -rf \
-    wp-content/themes/twentynineteen \
-    wp-content/themes/twentyseventeen
-
-ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["php-fpm"]
+WORKDIR /var/www/html
