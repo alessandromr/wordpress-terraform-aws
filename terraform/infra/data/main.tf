@@ -1,4 +1,6 @@
 terraform {
+  required_version = "= 0.13.4"
+
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -9,7 +11,7 @@ terraform {
   backend "s3" {
     bucket = "scalable-wp-onaws"
     workspace_key_prefix = "example-site"
-    key    = "data-persistence"
+    key    = "data"
     region = "eu-west-1"
     dynamodb_table="scalable-wp-onaws"
   }
