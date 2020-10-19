@@ -23,7 +23,8 @@ resource "aws_alb_listener_rule" "service_listener" {
     target_group_arn = aws_alb_target_group.service_target_group.arn
   }
   condition {
-    field  = "path-pattern"
-    values = [element(var.alb_path_patterns, count.index)]
+    path_pattern {
+      values = [element(var.alb_path_patterns, count.index)]
+    }
   }
 }

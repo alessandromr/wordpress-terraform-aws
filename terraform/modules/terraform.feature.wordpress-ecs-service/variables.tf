@@ -17,10 +17,6 @@ variable "short_service_name" {
 variable "ecs_cluster_arn" {
 }
 
-variable "ecs_cluster_name" {
-  type = string
-}
-
 variable "env" {
   type = string
 }
@@ -87,23 +83,31 @@ variable "retention_in_days" {
 #nginx variables
 
 variable "wordpress" {
-  type = map(object({
+  type = object({
     image_url = string
     cpu       = number
     memory    = number
     envs      = string
     secrets   = string
-  }))
+  })
 }
 
 #wordpress variables
 
 variable "nginx" {
-  type = map(object({
+  type = object({
     image_url = string
     cpu       = number
     memory    = number
     envs      = string
     secrets   = string
-  }))
+  })
+}
+
+#efs
+variable "efs_mount_path" {
+  type = string
+}
+variable "efs_id" {
+  type = string
 }
