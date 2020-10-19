@@ -16,3 +16,11 @@ output "database_subnets_ids" {
 output "database_subnets_group" {
   value = module.basic_infra.database_subnet_group
 }
+
+#ecr
+output "wordpress_image_url" {
+  value = aws_ecr_repository.wordpress_image.repository_url
+}
+output "nginx_image_url" {
+  value = aws_ecr_repository.nginx_image.repository_url
+}
