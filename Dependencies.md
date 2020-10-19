@@ -1,8 +1,9 @@
 # Dependencies
 
 1. shared 
-2. cluster / data-persistence
-3. services 
+2. cluster 
+3. data-persistence
+4. services 
 
 ## How it works?
 
