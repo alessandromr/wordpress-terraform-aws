@@ -16,8 +16,7 @@ locals {
   wordpress_db_user  = data.terraform_remote_state.data.outputs.wordpress_db_user
   wordpress_db_password_ssm_arn  = data.terraform_remote_state.data.outputs.wordpress_db_password_ssm_arn
 
-  wordpress_session_storage_cluster_endpoint  = data.terraform_remote_state.data.outputs.wordpress_db_password_ssm_arn
-  wordpress_session_storage_config_endpoint  = data.terraform_remote_state.data.outputs.wordpress_session_storage_config_endpoint
+  wordpress_session_storage_cluster_endpoint  = data.terraform_remote_state.data.outputs.wordpress_session_storage_cluster_endpoint
 
   aws_lb_listener_arn = data.terraform_remote_state.cluster.outputs.aws_lb_listener_arn
 }

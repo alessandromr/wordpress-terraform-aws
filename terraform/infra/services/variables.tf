@@ -17,14 +17,11 @@ variable "stack" {
 
 #dedicated variables
 
+variable "wordpress_desired_count"{
+  type = number
+}
 variable "services_params" {
   type = map(object({
-    min_count             = number
-    max_count             = number
-    scaleup_step_size     = number
-    scaleup_cooldown      = number
-    scaledown_cooldown    = number
-    desidered_count       = number
     service_memory        = number
     service_cpu           = number
     env_vars              = map(string)

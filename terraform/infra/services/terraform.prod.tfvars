@@ -10,12 +10,18 @@ tags = {
 
 #dedicated variables
 
+wordpress_desired_count=3
+
 services_params = {
-  "wordpress-service" = {
-    min_count          = 3
-    max_count          = 6
-    desidered_count    = 3
+  "php" = {
     service_memory     = 448
     service_cpu        = 512
     env_vars = {}
   },
+  "nginx" = {
+    service_memory     = 448
+    service_cpu        = 512
+    env_vars = {}
+  }
+}
+log_retention_in_days = 7

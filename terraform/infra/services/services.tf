@@ -9,25 +9,26 @@ module "wordpress_service" {
   service_name       = "service-wordpress"
   short_service_name = "wp"
 
-  vpc_id           = local.vpc_id
-  ecs_cluster_arn  = local.ecs_cluster_arn
+  vpc_id          = local.vpc_id
+  ecs_cluster_arn = local.ecs_cluster_arn
 
-  exposed_port      = 80
-  alb_path_patterns = ["/*"]
-  alb_rule_priority = [100]
-  load_balancer_listener_arn  = local.aws_lb_listener_arn
-  
+  exposed_port               = 80
+  alb_path_patterns          = ["/*"]
+  alb_rule_priority          = [100]
+  load_balancer_listener_arn = local.aws_lb_listener_arn
+
   service_health_check_path     = "/"
   service_health_check_timeout  = 30
   service_health_check_interval = 60
 
-  efs_mount_path = "/"
-  efs_id = local.wordpress_file_system_id
+  service_desired_count = var.wordpress_desired_count
 
-  wordpress = {
+  efs_id         = local.wordpress_file_system_id
+
+  php = {
     "image_url" = "${local.wordpress_image_url}:LATEST"
-    "cpu"       = var.services_params["wordpress"].service_cpu
-    "memory"    = var.services_params["wordpress"].service_memory
+    "cpu"       = var.services_params["php"].service_cpu
+    "memory"    = var.services_params["php"].service_memory
     "secrets"   = <<EOF
 {"name":"WORDPRESS_DB_PASSWORD","valueFrom":"${local.wordpress_db_password_ssm_arn}"}
 EOF

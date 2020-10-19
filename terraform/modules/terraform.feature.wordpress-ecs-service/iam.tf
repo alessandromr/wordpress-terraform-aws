@@ -91,6 +91,7 @@ data "aws_iam_policy_document" "task_execution_secrets_policy" {
     effect = "Allow"
     actions = [
       "secretsmanager:GetSecretValue",
+      "ssm:GetParameters"
     ]
     resources = var.secrets_arns
   }

@@ -82,7 +82,7 @@ variable "retention_in_days" {
 
 #nginx variables
 
-variable "wordpress" {
+variable "php" {
   type = object({
     image_url = string
     cpu       = number
@@ -105,9 +105,6 @@ variable "nginx" {
 }
 
 #efs
-variable "efs_mount_path" {
-  type = string
-}
 variable "efs_id" {
   type = string
 }

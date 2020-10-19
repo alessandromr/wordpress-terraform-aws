@@ -11,7 +11,7 @@ resource "aws_ecs_service" "service" {
   }
 
   load_balancer {
-    container_name   = var.service_name
+    container_name   = "${var.service_name}-nginx"
     container_port   = var.exposed_port
     target_group_arn = aws_alb_target_group.service_target_group.arn
   }
@@ -34,20 +34,17 @@ data "template_file" "task_def_tpl" {
   vars = {
     service_name = var.service_name
 
-    service_container_image_url_wordpress = var.wordpress["image_url"]
-    service_cpu_wordpress                 = var.wordpress["cpu"]
-    service_memory_wordpress              = var.wordpress["memory"]
-    service_env_variables_wordpress       = var.wordpress["envs"]
-    service_secrets_wordpress             = var.wordpress["secrets"]
+    service_container_image_url_php = var.php["image_url"]
+    service_cpu_php                 = var.php["cpu"]
+    service_memory_php              = var.php["memory"]
+    service_env_variables_php       = var.php["envs"]
+    service_secrets_php             = var.php["secrets"]
 
     service_container_image_url_nginx = var.nginx["image_url"]
-    service_cpu_nginx                 = var.nginx["nginx"]
+    service_cpu_nginx                 = var.nginx["cpu"]
     service_memory_nginx              = var.nginx["memory"]
     service_env_variables_nginx       = var.nginx["envs"]
     service_secrets_nginx             = var.nginx["secrets"]
-
-    efs_volume_id         = var.efs_id
-    efd_volume_mount_path = var.efs_mount_path
 
     exposed_port = var.exposed_port
 

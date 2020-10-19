@@ -1,12 +1,12 @@
 [
     {
-        "name": "${service_name}-wordpress",
-        "image": "${service_container_image_url_wordpress}",
-        "cpu": ${service_cpu_wordpress},
-        "memoryReservation": ${service_memory_wordpress},
+        "name": "${service_name}-php",
+        "image": "${service_container_image_url_php}",
+        "cpu": ${service_cpu_php},
+        "memoryReservation": ${service_memory_php},
         "essential": true,
-        "environment": [${service_env_variables_wordpress}],
-        "secrets": [${service_secrets_wordpress}],
+        "environment": [${service_env_variables_php}],
+        "secrets": [${service_secrets_php}],
         "logConfiguration": {
             "logDriver": "awslogs",
             "options": {
@@ -17,8 +17,8 @@
         },
         "mountPoints": [
             {
-                "sourceVolume": "${efs_volume_id}",
-                "containerPath": "${efd_volume_mount_path}",
+                "sourceVolume": "main_storage",
+                "containerPath": "/var/www/html",
                 "readOnly": false
             }
         ]
@@ -46,8 +46,8 @@
         },
         "mountPoints": [
             {
-                "sourceVolume": "${efs_volume_id}",
-                "containerPath": "${efd_volume_mount_path}",
+                "sourceVolume": "main_storage",
+                "containerPath": "/var/www/html",
                 "readOnly": true
             }
         ]
