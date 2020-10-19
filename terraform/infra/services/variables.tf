@@ -1,3 +1,7 @@
+variable "aws_region" {
+  type    = string
+}
+
 variable "tags" {
   type    = object({})
   default = null
@@ -23,7 +27,6 @@ variable "services_params" {
     desidered_count       = number
     service_memory        = number
     service_cpu           = number
-    image                 = string
     env_vars              = map(string)
   }))
 }

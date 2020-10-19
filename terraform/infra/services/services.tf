@@ -1,4 +1,3 @@
-
 module "wordpress_service" {
   source = "../../modules/terraform.feature.wordpress-ecs-service"
 
@@ -11,20 +10,22 @@ module "wordpress_service" {
   short_service_name = "wp"
 
   vpc_id           = local.vpc_id
-  ecs_cluster_name = local.ecs_cluster_name
   ecs_cluster_arn  = local.ecs_cluster_arn
 
   exposed_port      = 80
   alb_path_patterns = ["/*"]
   alb_rule_priority = [100]
-  alb_listener_arn  = var.services_load_balancer_listener_arn
-
+  load_balancer_listener_arn  = local.aws_lb_listener_arn
+  
   service_health_check_path     = "/"
   service_health_check_timeout  = 30
   service_health_check_interval = 60
 
+  efs_mount_path = "/"
+  efs_id = local.wordpress_file_system_id
+
   wordpress = {
-    "image_url" = local.wordpress_ecr_url
+    "image_url" = "${local.wordpress_image_url}:LATEST"
     "cpu"       = var.services_params["wordpress"].service_cpu
     "memory"    = var.services_params["wordpress"].service_memory
     "secrets"   = <<EOF
@@ -34,12 +35,12 @@ EOF
 {"name":"AWS_REGION","value":"${var.aws_region}"},
 {"name":"WORDPRESS_DB_HOST","value":"${local.wordpress_db_endpoint}"},
 {"name":"WORDPRESS_DB_USER","value":"${local.wordpress_db_user}"},
-{"name":"redis_php_ini_save_path","value":"${local.redis_endpoint}"}
+{"name":"redis_php_ini_save_path","value":"${local.wordpress_session_storage_cluster_endpoint}"}
 EOF
   }
 
   nginx = {
-    "image_url" = local.nginx_ecr_url
+    "image_url" = "${local.nginx_image_url}:LATEST"
     "cpu"       = var.services_params["nginx"].service_cpu
     "memory"    = var.services_params["nginx"].service_memory
     "secrets"   = ""

@@ -17,7 +17,5 @@ services_params = {
     desidered_count    = 3
     service_memory     = 448
     service_cpu        = 512
-    image              = ""
-    env_vars = {
-    }
+    env_vars = {}
   },
