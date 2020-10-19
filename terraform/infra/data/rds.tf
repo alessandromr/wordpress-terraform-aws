@@ -52,3 +52,11 @@ resource "random_password" "db_password" {
   override_special = "-_.$"
 }
 
+resource "aws_ssm_parameter" "db_password" {
+  name        = "/${local.prefix}/${var.environment}/database/rds/password"
+  description = "SSM Parameter for wordpress database"
+  type        = "SecureString"
+  value       = "${random_password.db_password.result}"
+
+  tags = var.tags
+}

@@ -13,13 +13,17 @@ output "wordpress_file_system_dns_name" {
 output "wordpress_db_endpoint" {
   value = module.wordpress_db.this_rds_cluster_endpoint
 }
-
 output "wordpress_db_sg_id" {
   value = module.wordpress_db.this_security_group_id
 }
-
 output "wordpress_db_port" {
   value = module.wordpress_db.this_rds_cluster_port
+}
+output "wordpress_db_user" {
+  value = random_string.db_username.result
+}
+output "wordpress_db_password_ssm_arn" {
+  value = aws_ssm_parameter.db_password.arn
 }
 
 #elasticache
