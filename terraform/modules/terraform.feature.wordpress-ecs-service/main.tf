@@ -51,6 +51,21 @@ resource "aws_ecs_task_definition" "task_def" {
   task_role_arn         = aws_iam_role.task_role.arn
   network_mode          = "bridge"
   execution_role_arn    = aws_iam_role.task_execution_role.arn
+
+
+  volume {
+    name = "main_storage"
+
+    efs_volume_configuration {
+      file_system_id          = local.efs_id
+      transit_encryption      = "ENABLED"
+      transit_encryption_port = 2999
+      authorization_config {
+        access_point_id = local.efs_access_point_id
+        iam             = "ENABLED"
+      }
+    }
+  }
 }
 
 resource "aws_cloudwatch_log_group" "service_log" {

@@ -1,0 +1,60 @@
+[
+    {
+        "name": "${service_name}-php",
+        "image": "${service_container_image_url_php}",
+        "cpu": ${service_cpu_php},
+        "memoryReservation": ${service_memory_php},
+        "essential": true,
+        "portMappings": [
+            {
+                "containerPort": ${exposed_port_php}
+            }
+        ],
+        "environment": [${service_env_variables_php}],
+        "secrets": [${service_secrets_php}],
+        "logConfiguration": {
+            "logDriver": "awslogs",
+            "options": {
+                "awslogs-group": "${log_group}",
+                "awslogs-region": "${aws_region}",
+                "awslogs-stream-prefix": "${stream_prefix}"
+            }
+        },
+        "mountPoints": [
+            {
+                "sourceVolume": "${efs_volume_id}",
+                "containerPath": "${efd_volume_mount_path}",
+                "readOnly": false
+            }
+        ]
+    },
+    {
+        "name": "${service_name}-nginx",
+        "image": "${service_container_image_url_nginx}",
+        "cpu": ${service_cpu_nginx},
+        "memoryReservation": ${service_memory_nginx},
+        "essential": true,
+        "portMappings": [
+            {
+                "containerPort": ${exposed_port_nginx}
+            }
+        ],
+        "environment": [${service_env_variables_nginx}],
+        "secrets": [${service_secrets_nginx}],
+        "logConfiguration": {
+            "logDriver": "awslogs",
+            "options": {
+                "awslogs-group": "${log_group}",
+                "awslogs-region": "${aws_region}",
+                "awslogs-stream-prefix": "${stream_prefix}"
+            }
+        },
+        "mountPoints": [
+            {
+                "sourceVolume": "${efs_volume_id}",
+                "containerPath": "${efd_volume_mount_path}",
+                "readOnly": true
+            }
+        ]
+    }
+]
