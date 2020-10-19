@@ -5,7 +5,7 @@ module "wordpress_db" {
   name = "${local.prefix}-${terraform.workspace}-wp-db"
 
   engine         = "aurora-mysql"
-  engine_version = "5.7"
+  engine_version = "5.7.mysql_aurora.2.07.2"
   port           = 3306
 
   vpc_id               = local.vpc_id
