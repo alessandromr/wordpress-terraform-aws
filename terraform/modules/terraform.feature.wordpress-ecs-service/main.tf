@@ -32,16 +32,28 @@ data "template_file" "task_def_tpl" {
   template = file("${path.module}/task_definition_template.json")
 
   vars = {
-    service_name                = local.service_name
-    service_container_image_url = var.service_container_image_url
-    service_cpu                 = var.service_cpu
-    service_memory              = var.service_memory
-    service_env_variables       = var.service_env_variables
-    service_secrets             = var.service_secrets
-    log_group                   = aws_cloudwatch_log_group.service_log.name
-    aws_region                  = var.aws_region
-    stream_prefix               = local.service_name
-    exposed_port                = var.exposed_port
+    service_name = local.service_name
+
+    service_container_image_url_wordpress = var.wordpress["image_url"]
+    service_cpu_wordpress                 = var.wordpress["cpu"]
+    service_memory_wordpress              = var.wordpress["memory"]
+    service_env_variables_wordpress       = var.wordpress["envs"]
+    service_secrets_wordpress             = var.wordpress["secrets"]
+
+    service_container_image_url_nginx = var.nginx["image_url"]
+    service_cpu_nginx                 = var.nginx["nginx"]
+    service_memory_nginx              = var.nginx["memory"]
+    service_env_variables_nginx       = var.nginx["envs"]
+    service_secrets_nginx             = var.nginx["secrets"]
+
+    efs_volume_id         = var.efs_id
+    efd_volume_mount_path = var.efs_mount_path
+
+    exposed_port = var.exposed_port
+
+    aws_region    = var.aws_region
+    log_group     = aws_cloudwatch_log_group.service_log.name
+    stream_prefix = local.service_name
   }
 }
 
@@ -51,7 +63,6 @@ resource "aws_ecs_task_definition" "task_def" {
   task_role_arn         = aws_iam_role.task_role.arn
   network_mode          = "bridge"
   execution_role_arn    = aws_iam_role.task_execution_role.arn
-
 
   volume {
     name = "main_storage"

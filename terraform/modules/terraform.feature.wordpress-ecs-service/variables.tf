@@ -25,10 +25,6 @@ variable "env" {
   type = string
 }
 
-variable "service_container_image_url" {
-}
-
-// Optional
 variable "vpc_id" {
   type = string
 }
@@ -68,32 +64,15 @@ variable "service_desired_count" {
   default = 1
 }
 
-variable "service_cpu" {
-  default = 512
-}
-
-variable "service_memory" {
-  default = 1024
-}
-
-variable "service_env_variables" {
-  type    = string
-  default = ""
-}
-
-variable "service_secrets" {
-  type    = string
-  default = ""
-}
-
 variable "policies" {
   type    = list(string)
   default = []
 }
 
 variable "secrets_arns" {
-  type    = list(string)
-  default = []
+  type        = list(string)
+  default     = []
+  description = "Generates policy for accessing secrets"
 }
 
 variable "exposed_port" {
@@ -103,4 +82,28 @@ variable "exposed_port" {
 variable "retention_in_days" {
   type    = number
   default = 3
+}
+
+#nginx variables
+
+variable "wordpress" {
+  type = map(object({
+    image_url = string
+    cpu       = number
+    memory    = number
+    envs      = string
+    secrets   = string
+  }))
+}
+
+#wordpress variables
+
+variable "nginx" {
+  type = map(object({
+    image_url = string
+    cpu       = number
+    memory    = number
+    envs      = string
+    secrets   = string
+  }))
 }

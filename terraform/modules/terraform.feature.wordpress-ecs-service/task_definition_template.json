@@ -1,17 +1,12 @@
 [
     {
-        "name": "${service_name}-php",
-        "image": "${service_container_image_url_php}",
-        "cpu": ${service_cpu_php},
-        "memoryReservation": ${service_memory_php},
+        "name": "${service_name}-wordpress",
+        "image": "${service_container_image_url_wordpress}",
+        "cpu": ${service_cpu_wordpress},
+        "memoryReservation": ${service_memory_wordpress},
         "essential": true,
-        "portMappings": [
-            {
-                "containerPort": ${exposed_port_php}
-            }
-        ],
-        "environment": [${service_env_variables_php}],
-        "secrets": [${service_secrets_php}],
+        "environment": [${service_env_variables_wordpress}],
+        "secrets": [${service_secrets_wordpress}],
         "logConfiguration": {
             "logDriver": "awslogs",
             "options": {
@@ -36,7 +31,7 @@
         "essential": true,
         "portMappings": [
             {
-                "containerPort": ${exposed_port_nginx}
+                "containerPort": ${exposed_port}
             }
         ],
         "environment": [${service_env_variables_nginx}],
