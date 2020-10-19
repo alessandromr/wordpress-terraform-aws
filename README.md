@@ -7,7 +7,15 @@
 
 ## Implementations
 
-### Redis
+### Computing
+
+WordPress is hosted on ECS (EC2) and is containerized. Containers scale with use, Cluster scale to allows containers scaling (ECS Capacity Provider).
+
+### Database
+
+Mysql database is hosted on RDS using Aurora Mysql compatible. The database can scale the number of read-replica automatically based on CPU utilization and connections count.
+
+### Application Caching
 
 A Redis cluster is implemented and can be used for:
 
@@ -15,7 +23,33 @@ A Redis cluster is implemented and can be used for:
 2. Session storing
 
 Some WordPress plugins and themes use native PHP sessions, to host WordPress behind a load balancer is necessary to distribuited those sessions.
-Settings about Redis are configured in `php.ini` and natively supported by php and php-redis extension.
+Settings about Redis are configured in `php.ini` and natively supported by php and php-redis extension.  
+
+Redis cluster is provisioned with Elasticache and is replicated in multiple AZs.
+
+## Application Build
+
+Docker images are stored in AWS ECR repository created with the first stack `shared`. So images must be pushed after deploying the first stack.
+
+### Image Push
+
+```bash
+
+#wordpress
+aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 629528675260.dkr.ecr.eu-west-1.amazonaws.com
+docker build -t example-site-shared-infra-prod-wordpress .
+docker tag example-site-shared-infra-prod-wordpress:latest 629528675260.dkr.ecr.eu-west-1.amazonaws.com/example-site-shared-infra-prod-wordpress:latest
+docker push 629528675260.dkr.ecr.eu-west-1.amazonaws.com/example-site-shared-infra-prod-wordpress:latest
+
+#nginx
+aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 629528675260.dkr.ecr.eu-west-1.amazonaws.com
+docker build -t example-site-shared-infra-prod-nginx .
+docker tag example-site-shared-infra-prod-nginx:latest 629528675260.dkr.ecr.eu-west-1.amazonaws.com/example-site-shared-infra-prod-nginx:latest
+docker push 629528675260.dkr.ecr.eu-west-1.amazonaws.com/example-site-shared-infra-prod-nginx:latest
+```
+
+Where `629528675260.dkr.ecr.eu-west-1.amazonaws.com/example-site-shared-infra-prod-nginx:latest` and `629528675260.dkr.ecr.eu-west-1.amazonaws.com/example-site-shared-infra-prod-wordpress:latest` are the URLs to your ECR repository.
+
 
 ## Deploy guide
 
@@ -112,3 +146,13 @@ This behaviour is intended and expected from Terraform.
 
 The stack is probably not supported on account that still have the old ECS ARN format. Please opt into the new format as advised by AWS.  
 [Reference](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-account-settings.html#ecs-resource-ids)  
+
+## Missing Points
+
+1. Full ARM support
+2. Wordpress on alpine linux OR smaller wordpres image
+3. Custom domain and SSL 
+4. Static assets with S3
+5. Monitoring and Alerting
+6. Backup and restore
+7. Better nginx configuration
