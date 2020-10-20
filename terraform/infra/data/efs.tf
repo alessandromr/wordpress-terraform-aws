@@ -12,7 +12,7 @@ resource "aws_efs_mount_target" "mount_target" {
 }
 
 resource "aws_security_group" "efs" {
-  name        = "${local.prefix}-${terraform.workspace}-ecs-instances-security-group"
+  name        = "${local.prefix}-${terraform.workspace}-efs-instances-security-group"
   description = "Allow TLS inbound traffic"
   vpc_id      = local.vpc_id
 }
