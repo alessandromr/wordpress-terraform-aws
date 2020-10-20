@@ -29,6 +29,10 @@ variable "subnets_ids" {
   type = list(string)
 }
 
+variable "security_groups"{
+  type = list(string)
+}
+
 variable "load_balancer_listener_arn" {
   type = string
 }

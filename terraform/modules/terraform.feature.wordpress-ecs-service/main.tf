@@ -9,6 +9,7 @@ resource "aws_ecs_service" "service" {
 
   network_configuration {
     subnets = var.subnets_ids
+    security_groups = var.security_groups
   }
 
   deployment_controller {

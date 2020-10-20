@@ -29,6 +29,12 @@
         "cpu": ${service_cpu_nginx},
         "memoryReservation": ${service_memory_nginx},
         "essential": true,
+        "dependsOn": [
+            {
+              "containerName": "${service_name}-php",
+              "condition": "START"
+            }
+        ],
         "portMappings": [
             {
                 "containerPort": ${exposed_port}

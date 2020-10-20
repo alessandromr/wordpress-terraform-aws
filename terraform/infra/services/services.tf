@@ -11,6 +11,7 @@ module "wordpress_service" {
 
   vpc_id          = local.vpc_id
   subnets_ids = local.private_subnets_ids
+  security_groups = [local.ecs_instances_sg_id]
   ecs_cluster_arn = local.ecs_cluster_arn
 
   exposed_port               = 80
