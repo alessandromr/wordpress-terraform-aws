@@ -28,8 +28,8 @@ output "wordpress_db_password_ssm_arn" {
 
 #elasticache
 output "wordpress_session_storage_cluster_endpoint" {
-  value =  aws_elasticache_replication_group.wordpress_session_storage.primary_endpoint_address
+  value = aws_elasticache_replication_group.wordpress_session_storage.primary_endpoint_address
 }
 output "wordpress_session_storage_config_endpoint" {
-  value =  aws_elasticache_replication_group.wordpress_session_storage.configuration_endpoint_address
+  value = aws_elasticache_replication_group.wordpress_session_storage.configuration_endpoint_address
 }

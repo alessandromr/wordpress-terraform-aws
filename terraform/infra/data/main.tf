@@ -9,11 +9,11 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "scalable-wp-onaws"
+    bucket               = "scalable-wp-onaws"
     workspace_key_prefix = "example-site"
-    key    = "data"
-    region = "eu-west-1"
-    dynamodb_table="scalable-wp-onaws"
+    key                  = "data"
+    region               = "eu-west-1"
+    dynamodb_table       = "scalable-wp-onaws"
   }
 }
 

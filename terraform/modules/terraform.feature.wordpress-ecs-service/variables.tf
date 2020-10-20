@@ -29,7 +29,7 @@ variable "subnets_ids" {
   type = list(string)
 }
 
-variable "security_groups"{
+variable "security_groups" {
   type = list(string)
 }
 

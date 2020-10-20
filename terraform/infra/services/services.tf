@@ -10,7 +10,7 @@ module "wordpress_service" {
   short_service_name = "wp"
 
   vpc_id          = local.vpc_id
-  subnets_ids = local.private_subnets_ids
+  subnets_ids     = local.private_subnets_ids
   security_groups = [local.ecs_instances_sg_id]
   ecs_cluster_arn = local.ecs_cluster_arn
 
@@ -25,7 +25,7 @@ module "wordpress_service" {
 
   service_desired_count = var.wordpress_desired_count
 
-  efs_id         = local.wordpress_file_system_id
+  efs_id = local.wordpress_file_system_id
 
   php = {
     "image_url" = "${local.wordpress_image_url}:latest"

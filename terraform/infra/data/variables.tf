@@ -1,5 +1,5 @@
 variable "aws_region" {
-  type    = string
+  type = string
 }
 
 variable "tags" {
@@ -8,37 +8,37 @@ variable "tags" {
 }
 
 variable "project" {
-  type    = string
+  type = string
 }
 
 variable "stack" {
-  type    = string
+  type = string
 }
 
 #dedicated variables
 
 
 variable "redis_node_type" {
-  type    = string
+  type = string
 }
 
 variable "redis_node_count" {
-  type    = string
+  type = string
 }
 
 variable "rds_instance_type" {
-  type    = string
+  type = string
 }
 
 variable "rds_connections_to_scale" {
-  type    = number
+  type = number
 }
 
 variable "rds_max_replicas" {
-  type    = number
+  type = number
 }
 
 variable "rds_min_replicas" {
-  type    = number
+  type = number
 }
 

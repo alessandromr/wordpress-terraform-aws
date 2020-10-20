@@ -75,7 +75,7 @@ data "aws_ami" "amazon_linux_2" {
     name   = "name"
     values = ["amzn-ami*amazon-ecs-optimized"]
   }
-  
+
   filter {
     name   = "architecture"
     values = ["x86_64"]

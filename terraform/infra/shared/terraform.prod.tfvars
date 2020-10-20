@@ -10,4 +10,4 @@ tags = {
 
 #dedicated
 single_nat_gateway = false
-enable_nat_gateway= true
+enable_nat_gateway = true

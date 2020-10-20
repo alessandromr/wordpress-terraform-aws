@@ -8,7 +8,7 @@ resource "aws_ecs_service" "service" {
   deployment_minimum_healthy_percent = 50
 
   network_configuration {
-    subnets = var.subnets_ids
+    subnets         = var.subnets_ids
     security_groups = var.security_groups
   }
 
