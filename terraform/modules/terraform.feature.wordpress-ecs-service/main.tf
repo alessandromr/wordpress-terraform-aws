@@ -6,6 +6,11 @@ resource "aws_ecs_service" "service" {
   cluster                            = var.ecs_cluster_arn
   deployment_maximum_percent         = 200
   deployment_minimum_healthy_percent = 50
+
+  network_configuration {
+    subnets = var.subnets_ids
+  }
+
   deployment_controller {
     type = "ECS"
   }
@@ -58,7 +63,7 @@ resource "aws_ecs_task_definition" "task_def" {
   family                = "${var.prefix}-${var.env}-${var.service_name}-task-def"
   container_definitions = data.template_file.task_def_tpl.rendered
   task_role_arn         = aws_iam_role.task_role.arn
-  network_mode          = "bridge"
+  network_mode          = "awsvpc"
   execution_role_arn    = aws_iam_role.task_execution_role.arn
 
   volume {

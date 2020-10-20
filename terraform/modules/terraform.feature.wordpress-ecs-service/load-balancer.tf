@@ -4,6 +4,7 @@ resource "aws_alb_target_group" "service_target_group" {
   port                 = var.exposed_port
   vpc_id               = var.vpc_id
   deregistration_delay = 30
+  target_type = "ip"
 
   health_check {
     path     = var.service_health_check_path

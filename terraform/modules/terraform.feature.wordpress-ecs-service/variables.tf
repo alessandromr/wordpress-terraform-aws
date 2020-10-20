@@ -25,6 +25,10 @@ variable "vpc_id" {
   type = string
 }
 
+variable "subnets_ids" {
+  type = list(string)
+}
+
 variable "load_balancer_listener_arn" {
   type = string
 }
