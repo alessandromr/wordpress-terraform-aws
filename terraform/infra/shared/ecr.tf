@@ -1,11 +1,11 @@
 resource "aws_ecr_repository" "wordpress_image" {
   name                 = "${local.prefix}-${terraform.workspace}-wordpress"
-  image_tag_mutability = "IMMUTABLE"
+  image_tag_mutability = "MUTABLE"
 }
 
 resource "aws_ecr_repository" "nginx_image" {
   name                 = "${local.prefix}-${terraform.workspace}-nginx"
-  image_tag_mutability = "IMMUTABLE"
+  image_tag_mutability = "MUTABLE"
 }
 
 resource "aws_ecr_repository_policy" "wordpress_image_policy" {
