@@ -14,14 +14,14 @@ wordpress_desired_count = 3
 
 services_params = {
   "php" = {
-    service_memory = 448
-    service_cpu    = 512
+    service_memory = 750
+    service_cpu    = 800
     env_vars       = {}
   },
   "nginx" = {
-    service_memory = 128
-    service_cpu    = 128
+    service_memory = 150
+    service_cpu    = 200
     env_vars       = {}
   }
 }
-log_retention_in_days = 7
+log_retention_in_days = 14

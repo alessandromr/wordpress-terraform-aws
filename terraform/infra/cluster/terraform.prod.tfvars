@@ -16,4 +16,4 @@ cluster_min_size         = 3
 cluster_max_size         = 5
 cluster_desired_capacity = 3
 
-instance_type = "t3.micro"
+instance_type = "t3.small"
