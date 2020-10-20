@@ -14,13 +14,13 @@ wordpress_desired_count = 3
 
 services_params = {
   "php" = {
-    service_memory = 448
-    service_cpu    = 512
+    service_memory = 128
+    service_cpu    = 128
     env_vars       = {}
   },
   "nginx" = {
-    service_memory = 448
-    service_cpu    = 512
+    service_memory = 128
+    service_cpu    = 128
     env_vars       = {}
   }
 }
