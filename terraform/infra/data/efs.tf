@@ -8,8 +8,8 @@ resource "aws_efs_mount_target" "mount_target" {
   count = length(local.private_subnets_ids)
   file_system_id = aws_efs_file_system.wordpress_file_system.id
   subnet_id      = element(local.private_subnets_ids, count.index)
+  security_groups = [aws_security_group.efs.id]
 }
-
 
 resource "aws_security_group" "efs" {
   name        = "${local.prefix}-${terraform.workspace}-ecs-instances-security-group"
