@@ -1,5 +1,6 @@
 locals {
   vpc_id = data.terraform_remote_state.shared_infra.outputs.vpc_id
+  private_subnets_ids = data.terraform_remote_state.shared_infra.outputs.private_subnets_ids
 
   ecs_cluster_id = data.terraform_remote_state.cluster.outputs.ecs_cluster_id
   ecs_cluster_arn  = data.terraform_remote_state.cluster.outputs.ecs_cluster_arn

@@ -10,6 +10,7 @@ module "wordpress_service" {
   short_service_name = "wp"
 
   vpc_id          = local.vpc_id
+  subnets_ids = local.private_subnets_ids
   ecs_cluster_arn = local.ecs_cluster_arn
 
   exposed_port               = 80
@@ -26,7 +27,7 @@ module "wordpress_service" {
   efs_id         = local.wordpress_file_system_id
 
   php = {
-    "image_url" = "${local.wordpress_image_url}:LATEST"
+    "image_url" = "${local.wordpress_image_url}:latest"
     "cpu"       = var.services_params["php"].service_cpu
     "memory"    = var.services_params["php"].service_memory
     "secrets"   = <<EOF
@@ -41,7 +42,7 @@ EOF
   }
 
   nginx = {
-    "image_url" = "${local.nginx_image_url}:LATEST"
+    "image_url" = "${local.nginx_image_url}:latest"
     "cpu"       = var.services_params["nginx"].service_cpu
     "memory"    = var.services_params["nginx"].service_memory
     "secrets"   = ""
