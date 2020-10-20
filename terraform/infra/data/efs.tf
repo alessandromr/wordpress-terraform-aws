@@ -34,3 +34,12 @@ resource "aws_security_group_rule" "efs_out" {
   security_group_id = aws_security_group.efs.id
   source_security_group_id = local.ecs_instances_sg_id
 }
+
+resource "aws_security_group_rule" "ecs_allow_inbound_from_efs" {
+  type              = "ingress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  security_group_id = local.ecs_instances_sg_id
+  source_security_group_id = aws_security_group.efs.id
+}
