@@ -33,15 +33,24 @@ docker push 629528675260.dkr.ecr.eu-west-1.amazonaws.com/example-site-shared-inf
 
 Where `629528675260.dkr.ecr.eu-west-1.amazonaws.com/example-site-shared-infra-prod-nginx:latest` and `629528675260.dkr.ecr.eu-west-1.amazonaws.com/example-site-shared-infra-prod-wordpress:latest` are the URLs to your ECR repository.
 
-## Architectural choiches
+## Architectural choices
+
+### Network
+
+The network is composed of 9 subnets: 3 publics, 3 privates, 3 databases. Private subnets are the wider ones to allows the scaling of ECS Tasks with `awsvpc` 
+network mode (each task has an ENI and a private IP).  
 
 ### Computing
 
-WordPress is hosted on ECS (EC2) and is containerized. Containers scale with use, Cluster scale to allows containers scaling (ECS Capacity Provider).
+WordPress is hosted on ECS (EC2) and is containerized. Containers scale with use, Cluster scale to allow containers scaling (ECS Capacity Provider).
 
 ### Database
 
 Mysql database is hosted on RDS using Aurora Mysql compatible. The database can scale the number of read-replica automatically based on CPU utilization and connections count.
+
+### File System
+
+WordPress files are stored in AWS EFS and shared between all WordPress instances.
 
 ### Application Caching
 
@@ -53,7 +62,7 @@ A Redis cluster is implemented and can be used for:
 Some WordPress plugins and themes use native PHP sessions, to host WordPress behind a load balancer is necessary to distributed those sessions.
 Settings about Redis are configured in `php.ini` and natively supported by PHP and `php-redis` extension.  
 
-Redis cluster is provisioned with Elasticache and is replicated in multiple AZs.
+Redis cluster is provisioned with Elasticache and spans in multiple AZs.
 
 ## Terraform style
 
@@ -161,3 +170,4 @@ If the stack has already been deployed and you have a state on your remote backe
 5. Monitoring and Alerting
 6. Backup and restore
 7. Better nginx configuration
+8. Autoscaling Elasticache nodes
