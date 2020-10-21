@@ -1,20 +1,30 @@
 // Required
 variable "aws_region" {
+  type = string
 }
 
 variable "account_id" {
+  type = string
 }
 
 variable "prefix" {
+  type = string
 }
 
 variable "service_name" {
+  type = string
 }
 
 variable "short_service_name" {
+  type = string
 }
 
 variable "ecs_cluster_arn" {
+  type = string
+}
+
+variable "ecs_cluster_name" {
+  type = string
 }
 
 variable "env" {
@@ -65,6 +75,14 @@ variable "service_health_check_interval" {
 }
 
 variable "service_desired_count" {
+  default = 1
+}
+
+variable "service_min_count" {
+  default = 1
+}
+
+variable "service_max_count" {
   default = 1
 }
 

@@ -20,6 +20,13 @@ variable "stack" {
 variable "wordpress_desired_count" {
   type = number
 }
+variable "wordpress_max_count" {
+  type = number
+}
+variable "wordpress_min_count" {
+  type = number
+}
+
 variable "services_params" {
   type = map(object({
     service_memory = number

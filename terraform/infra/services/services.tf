@@ -24,6 +24,8 @@ module "wordpress_service" {
   service_health_check_interval = 60
 
   service_desired_count = var.wordpress_desired_count
+  service_max_count = var.wordpress_max_count
+  service_min_count = var.wordpress_min_count
 
   efs_id = local.wordpress_file_system_id
 
