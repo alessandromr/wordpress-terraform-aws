@@ -9,10 +9,11 @@ module "wordpress_service" {
   service_name       = "service-wordpress"
   short_service_name = "wp"
 
-  vpc_id          = local.vpc_id
-  subnets_ids     = local.private_subnets_ids
-  security_groups = [local.ecs_instances_sg_id]
-  ecs_cluster_arn = local.ecs_cluster_arn
+  vpc_id           = local.vpc_id
+  subnets_ids      = local.private_subnets_ids
+  security_groups  = [local.ecs_instances_sg_id]
+  ecs_cluster_arn  = local.ecs_cluster_arn
+  ecs_cluster_name = local.ecs_cluster_id
 
   exposed_port               = 80
   alb_path_patterns          = ["/*"]
@@ -24,8 +25,8 @@ module "wordpress_service" {
   service_health_check_interval = 60
 
   service_desired_count = var.wordpress_desired_count
-  service_max_count = var.wordpress_max_count
-  service_min_count = var.wordpress_min_count
+  service_max_count     = var.wordpress_max_count
+  service_min_count     = var.wordpress_min_count
 
   efs_id = local.wordpress_file_system_id
 
