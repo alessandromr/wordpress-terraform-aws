@@ -11,8 +11,8 @@ tags = {
 #dedicated variables
 
 wordpress_desired_count = 3
-wordpress_max_count=12
-wordpress_min_count=3
+wordpress_max_count     = 12
+wordpress_min_count     = 3
 
 services_params = {
   "php" = {

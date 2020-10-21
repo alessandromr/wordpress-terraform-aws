@@ -10,7 +10,7 @@ tags = {
 
 #dedicated variables
 
-redis_node_type   = "cache.t3.small"
+redis_node_type  = "cache.t3.small"
 redis_node_count = 2
 
 rds_instance_type        = "db.t3.small"

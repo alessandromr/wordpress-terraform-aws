@@ -8,16 +8,16 @@ module "metric_alarm" {
   comparison_operator = "GreaterThanOrEqualToThreshold"
   unit                = "Average"
 
-  evaluation_periods  = 2
-  threshold           = 75
-  period              = 30
+  evaluation_periods = 2
+  threshold          = 75
+  period             = 30
 
   namespace   = "AWS/ECS"
   metric_name = "CPUUtilization"
   statistic   = "Average"
 
   alarm_actions = [aws_appautoscaling_policy.ecs_scale_up.arn]
-  ok_actions = [aws_appautoscaling_policy.ecs_scale_down.arn]
+  ok_actions    = [aws_appautoscaling_policy.ecs_scale_down.arn]
 
 }
 

@@ -13,7 +13,7 @@ resource "aws_elasticache_replication_group" "wordpress_session_storage" {
 
   port = 6379
 
-  subnet_group_name  = aws_elasticache_subnet_group.wp_sess_storage_subnet_group.name
+  subnet_group_name = aws_elasticache_subnet_group.wp_sess_storage_subnet_group.name
 }
 
 
