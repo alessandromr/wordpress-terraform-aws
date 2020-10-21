@@ -22,12 +22,7 @@ variable "redis_node_type" {
   type = string
 }
 
-variable "redis_replicas_per_node" {
-  type = number
-  description = "Number of replicas each node has"
-}
-
-variable "redis_node_number" {
+variable "redis_node_count" {
   type = number
 }
 

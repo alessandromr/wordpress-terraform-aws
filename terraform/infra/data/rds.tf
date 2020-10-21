@@ -34,7 +34,7 @@ module "wordpress_db" {
   replica_scale_max = var.rds_max_replicas
   replica_scale_min = var.rds_min_replicas
 
-  allowed_security_groups         = [local.ecs_instances_sg_id]
+  allowed_security_groups = [local.ecs_instances_sg_id]
 
   tags = var.tags
 }
