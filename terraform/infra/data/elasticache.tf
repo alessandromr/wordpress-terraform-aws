@@ -15,6 +15,12 @@ resource "aws_elasticache_replication_group" "wordpress_session_storage" {
 
   availability_zones = local.azs
   subnet_group_name  = aws_elasticache_subnet_group.wp_sess_storage_subnet_group.name
+
+
+  cluster_mode {
+    replicas_per_node_group = var.redis_replicas_per_node
+    num_node_groups         = var.redis_node_number
+  }
 }
 
 

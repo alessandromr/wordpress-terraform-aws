@@ -11,7 +11,8 @@ tags = {
 #dedicated variables
 
 redis_node_type  = "cache.t3.micro"
-redis_node_count = 3
+replicas_per_node_group = 3
+replicas_per_node_group = 0
 
 rds_instance_type        = "db.t3.small"
 rds_connections_to_scale = 120 #70% of "db.t3.small" max connections

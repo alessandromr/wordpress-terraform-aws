@@ -22,8 +22,13 @@ variable "redis_node_type" {
   type = string
 }
 
-variable "redis_node_count" {
-  type = string
+variable "replicas_per_node_group" {
+  type = number
+  description = "Number of replicas each node has"
+}
+
+variable "num_node_groups" {
+  type = number
 }
 
 variable "rds_instance_type" {
