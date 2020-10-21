@@ -170,6 +170,10 @@ If the stack has already been deployed and you have a state on your remote backe
     terraform destroy --var-file=terraform.prod.tfvars
 ```
 
+During the destroy phase of the `cluster` stack, is necessary to terminate ASG instances manually. With Protection from scale-in enabled Terraform and the ASG will not terminate the instance automatically. This behavior is expected and a manual action is necessary.  
+The manual action can be replaced with a local-exec during the destroy phase, but I consider it risky.
+My advice is to terminate instances when terraform will start destroying `aws_ecs_cluster.ecs_wordpress`.
+
 ## Missing Points
 
 1. Deployment or ARM architectures
