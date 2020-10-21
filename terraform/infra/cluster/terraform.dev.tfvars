@@ -13,7 +13,7 @@ tags = {
 cluster_name = "wordpress"
 
 cluster_min_size         = 1
-cluster_max_size         = 2
+cluster_max_size         = 3
 cluster_desired_capacity = 1
 
 instance_type = "t3.small"
