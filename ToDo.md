@@ -2,11 +2,7 @@
 
 1. Modularize ASG
 
-2. Test if needed `lifecycle ignore` in `aws_ecs_capacity_provider`
+2. Check scaling with capacity provider
 
-4. Check scaling with capacity provider
-
-5. Local exec to kill ec2 on destroy
-
-6. Scaling containers on service
+3. Test scaling containers on service
 
