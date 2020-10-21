@@ -17,3 +17,9 @@ cluster_max_size         = 3
 cluster_desired_capacity = 1
 
 instance_type = "t3.small"
+
+#capacity_provider
+
+maximum_scaling_step_size             = 2
+minimum_scaling_step_size             = 1
+capacity_provider_desired_utilization = 90

@@ -35,3 +35,16 @@ variable "cluster_desired_capacity" {
 variable "instance_type" {
   type = string
 }
+
+
+#capacity provider
+
+variable "minimum_scaling_step_size" {
+  type = number
+}
+variable "maximum_scaling_step_size" {
+  type = number
+}
+variable "capacity_provider_desired_utilization" {
+  type = number
+}

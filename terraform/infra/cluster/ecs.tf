@@ -18,10 +18,10 @@ resource "aws_ecs_capacity_provider" "ecs_wordpress" {
     managed_termination_protection = "ENABLED"
 
     managed_scaling {
-      maximum_scaling_step_size = 1000
-      minimum_scaling_step_size = 1
+      maximum_scaling_step_size = var.minimum_scaling_step_size
+      minimum_scaling_step_size = var.minimum_scaling_step_size
       status                    = "ENABLED"
-      target_capacity           = var.cluster_desired_capacity
+      target_capacity           = var.capacity_provider_desired_utilization
     }
   }
 }
