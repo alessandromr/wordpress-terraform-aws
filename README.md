@@ -1,35 +1,18 @@
-# Scalable, HA WordPress deploy on AWS with Terraform
+# WordPress Deployment
+
+This repository contains an example for deploying WordPress on AWS, the deployment try to be Highly Available and Highly Scalable. 
+The deployment natively supports multiple environments.  
+
+Purely for the example, custom domains and SSL certificated are not provisioned or considered.
 
 ## Requirements
 
-- Terraform 0.13.4 or tfswitch
+- Terraform 0.13.4
 - awscli
 
-## Implementations
+## Build the application
 
-### Computing
-
-WordPress is hosted on ECS (EC2) and is containerized. Containers scale with use, Cluster scale to allows containers scaling (ECS Capacity Provider).
-
-### Database
-
-Mysql database is hosted on RDS using Aurora Mysql compatible. The database can scale the number of read-replica automatically based on CPU utilization and connections count.
-
-### Application Caching
-
-A Redis cluster is implemented and can be used for:
-
-1. Object caching
-2. Session storing
-
-Some WordPress plugins and themes use native PHP sessions, to host WordPress behind a load balancer is necessary to distribuited those sessions.
-Settings about Redis are configured in `php.ini` and natively supported by php and php-redis extension.  
-
-Redis cluster is provisioned with Elasticache and is replicated in multiple AZs.
-
-## Application Build
-
-Docker images are stored in AWS ECR repository created with the first stack `shared`. So images must be pushed after deploying the first stack.
+Docker images are stored in an AWS ECR repository created with the first stack `shared`. So images must be pushed after deploying the first stack.
 
 ### Image Push
 
@@ -50,8 +33,29 @@ docker push 629528675260.dkr.ecr.eu-west-1.amazonaws.com/example-site-shared-inf
 
 Where `629528675260.dkr.ecr.eu-west-1.amazonaws.com/example-site-shared-infra-prod-nginx:latest` and `629528675260.dkr.ecr.eu-west-1.amazonaws.com/example-site-shared-infra-prod-wordpress:latest` are the URLs to your ECR repository.
 
+## Architectural choiches
 
-## Deploy guide
+### Computing
+
+WordPress is hosted on ECS (EC2) and is containerized. Containers scale with use, Cluster scale to allows containers scaling (ECS Capacity Provider).
+
+### Database
+
+Mysql database is hosted on RDS using Aurora Mysql compatible. The database can scale the number of read-replica automatically based on CPU utilization and connections count.
+
+### Application Caching
+
+A Redis cluster is implemented and can be used for:
+
+1. Object caching
+2. Session storing
+
+Some WordPress plugins and themes use native PHP sessions, to host WordPress behind a load balancer is necessary to distributed those sessions.
+Settings about Redis are configured in `php.ini` and natively supported by PHP and `php-redis` extension.  
+
+Redis cluster is provisioned with Elasticache and is replicated in multiple AZs.
+
+## Terraform style
 
 ### Workspaces
 
@@ -97,6 +101,8 @@ This repository utilizes var-files, one for each environment. You must specify t
     terraform destroy --var-file=terraform.prod.tfvars
 ```
 
+## Deploy guide
+
 ### Deploy Order
 
 1. shared
@@ -122,36 +128,35 @@ Before start deploying your infrastructure you have to provision an S3 bucket an
     terraform apply --var-file=terraform.prod.tfvars
     ```
 
+3. ```bash
+    cd ../data/
+    terraform init
+    terraform workspace new prod
+    terraform apply --var-file=terraform.prod.tfvars
+    ```
+
+4. ```bash
+    cd ../services/
+    terraform init
+    terraform workspace new prod
+    terraform apply --var-file=terraform.prod.tfvars
+    ```
+
 ### Successive deploys
 
 If the stack has already been deployed and you have a state on your remote backend, you can avoid the workspace creation (`terraform workspace new prod`) and instead use `terraform workspace select prod` to select the already existing workspace.
 
-### Destroy
-
-#### Notes:  
-
-ASG is created with `protect_from_scale_in` set to true, to avoid ASG killing instances with active containers running.
-With this parameter enabled terraform will wait for the user to terminate instances during `destroy` phase manually. 
-So is necessary to terminate instances of ASG manually during `destroy` phase.
-
-This behaviour is intended and expected from Terraform.
-
-#### Commands
+## Destroy
 
 ```bash
     terraform destroy --var-file=terraform.prod.tfvars
 ```
 
-## Errors
-
-The stack is probably not supported on account that still have the old ECS ARN format. Please opt into the new format as advised by AWS.  
-[Reference](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-account-settings.html#ecs-resource-ids)  
-
 ## Missing Points
 
-1. Full ARM support
-2. Wordpress on alpine linux OR smaller wordpres image
-3. Custom domain and SSL 
+1. Deployment or ARM architectures
+2. Reduce WordPress image size
+3. Custom domain and SSL
 4. Static assets with S3
 5. Monitoring and Alerting
 6. Backup and restore
