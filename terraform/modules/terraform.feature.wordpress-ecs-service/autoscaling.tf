@@ -6,11 +6,11 @@ module "metric_alarm" {
   alarm_name          = "${var.prefix}-${var.service_name}-${var.env}-ecs-alarm"
   alarm_description   = "CPU Metrics on ecs service ${var.service_name}"
   comparison_operator = "GreaterThanOrEqualToThreshold"
-  unit                = "Average"
+  unit                = "Count"
 
-  evaluation_periods = 2
+  evaluation_periods = 1
   threshold          = 75
-  period             = 30
+  period             = 60
 
   namespace   = "AWS/ECS"
   metric_name = "CPUUtilization"
