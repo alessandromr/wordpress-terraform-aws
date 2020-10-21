@@ -1,6 +1,6 @@
 # WordPress Deployment
 
-This repository contains an example for deploying WordPress on AWS, the deployment try to be Highly Available and Highly Scalable. 
+This repository contains an example for deploying WordPress on AWS, the deployment try to be Highly Available and Highly Scalable.  
 The deployment natively supports multiple environments.  
 
 Purely for the example, custom domains and SSL certificated are not provisioned or considered.
@@ -37,7 +37,7 @@ Where `629528675260.dkr.ecr.eu-west-1.amazonaws.com/example-site-shared-infra-pr
 
 ### Network
 
-The network is composed of 9 subnets: 3 publics, 3 privates, 3 databases. Private subnets are the wider ones to allows the scaling of ECS Tasks with `awsvpc` 
+The network is composed of 9 subnets: 3 publics, 3 privates, 3 databases. Private subnets are the wider ones to allows the scaling of ECS Tasks with `awsvpc`
 network mode (each task has an ENI and a private IP).  
 
 ### Computing
@@ -62,7 +62,9 @@ A Redis cluster is implemented and can be used for:
 Some WordPress plugins and themes use native PHP sessions, to host WordPress behind a load balancer is necessary to distributed those sessions.
 Settings about Redis are configured in `php.ini` and natively supported by PHP and `php-redis` extension.  
 
-Redis cluster is provisioned with Elasticache and spans in multiple AZs.
+Redis cluster is provisioned with Elasticache and spans in multiple AZs for replication. This Redis cluster is replicated but not sharded.  
+On a bigger scale sharding can help scale write demand, but it's probably not necessary for this specific case where writes are significantly less than reads.
+For reads, replication insure we can have multiple nodes to read from.  
 
 ## Terraform style
 
@@ -72,32 +74,37 @@ This repository utilizes Terraform Workspaces, S3 back-end and DynamoDB lock. Wo
 During the first deploy you will have to create the workspace.  
 
 Create a workspace:
+
 ```bash
     terraform workspace new prod
 ```
 
 Select a workspace:
+
 ```bash
     terraform workspace select prod
 ```
 
-Show current workspace:
+Show the current workspace:
+
 ```bash
     terraform workspace show
 ```
 
 List workspaces:
+
 ```bash
     terraform workspace list
 ```
 
-Terraform will confirm the current workspaces during `apply` or `destroy` phase:
+Terraform will confirm the current workspaces during the `apply` or the `destroy` phase:
+
 ```bash
 Do you want to perform these actions in workspace "prod"?
     Terraform will perform the actions described above.
     Only 'yes' will be accepted to approve.
 
-    Enter a value: 
+    Enter a value:
 ```
 
 ### Var Files
@@ -168,6 +175,6 @@ If the stack has already been deployed and you have a state on your remote backe
 3. Custom domain and SSL
 4. Static assets with S3
 5. Monitoring and Alerting
-6. Backup and restore
-7. Better nginx configuration
-8. Autoscaling Elasticache nodes
+6. Backup and restore (EFS)
+7. Better NGINX configuration
+8. Autoscaling Elasticache replication nodes
