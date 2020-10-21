@@ -13,7 +13,7 @@ module "wordpress_service" {
   subnets_ids      = local.private_subnets_ids
   security_groups  = [local.ecs_instances_sg_id]
   ecs_cluster_arn  = local.ecs_cluster_arn
-  ecs_cluster_name = local.ecs_cluster_id
+  ecs_cluster_name = local.ecs_cluster_name
 
   exposed_port               = 80
   alb_path_patterns          = ["/*"]
