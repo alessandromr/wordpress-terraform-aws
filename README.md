@@ -19,12 +19,14 @@ Docker images are stored in an AWS ECR repository created with the first stack `
 ```bash
 
 #wordpress
+cd ./application/wordpress
 aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 629528675260.dkr.ecr.eu-west-1.amazonaws.com
 docker build -t example-site-shared-infra-prod-wordpress .
 docker tag example-site-shared-infra-prod-wordpress:latest 629528675260.dkr.ecr.eu-west-1.amazonaws.com/example-site-shared-infra-prod-wordpress:latest
 docker push 629528675260.dkr.ecr.eu-west-1.amazonaws.com/example-site-shared-infra-prod-wordpress:latest
 
 #nginx
+cd ./application/nginx
 aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 629528675260.dkr.ecr.eu-west-1.amazonaws.com
 docker build -t example-site-shared-infra-prod-nginx .
 docker tag example-site-shared-infra-prod-nginx:latest 629528675260.dkr.ecr.eu-west-1.amazonaws.com/example-site-shared-infra-prod-nginx:latest
