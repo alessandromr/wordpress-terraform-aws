@@ -9,11 +9,17 @@ resource "aws_elasticache_replication_group" "wordpress_session_storage" {
 
   parameter_group_name = "default.redis6.x"
   engine               = "redis"
-  engine_version       = "6.0.5"
+  engine_version       = "6.x"
 
   port = 6379
 
   subnet_group_name = aws_elasticache_subnet_group.wp_sess_storage_subnet_group.name
+
+  lifecycle {
+    ignore_changes = [
+      engine_version,
+    ]
+  }
 }
 
 
