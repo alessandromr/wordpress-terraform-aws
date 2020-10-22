@@ -33,7 +33,11 @@ docker tag example-site-shared-infra-prod-nginx:latest 629528675260.dkr.ecr.eu-w
 docker push 629528675260.dkr.ecr.eu-west-1.amazonaws.com/example-site-shared-infra-prod-nginx:latest
 ```
 
-Where `629528675260.dkr.ecr.eu-west-1.amazonaws.com/example-site-shared-infra-prod-nginx:latest` and `629528675260.dkr.ecr.eu-west-1.amazonaws.com/example-site-shared-infra-prod-wordpress:latest` are the URLs to your ECR repository.
+Where `629528675260.dkr.ecr.eu-west-1.amazonaws.com/example-site-shared-infra-prod-nginx:latest` and `629528675260.dkr.ecr.eu-west-1.amazonaws.com/example-site-shared-infra-prod-wordpress:latest` are the URLs to your ECR repository.  
+Both images are based on alpine and are pretty light, ECR indicates these values as their size:  
+
+- NGINX 9.69MB
+- WORDPRESS 81.49MB
 
 ## Architectural choices
 
@@ -44,7 +48,9 @@ network mode (each task has an ENI and a private IP).
 
 ### Computing
 
-WordPress is hosted on ECS (EC2) and is containerized. Containers scale with use, Cluster scale to allow containers scaling (ECS Capacity Provider).
+WordPress is hosted on ECS (EC2) and is containerized. Containers scale with CPU utilization, cluster scale with ECS Capacity Provider.  
+Cluster scaling with ECS Capacity Provider considers a lot of different parameters for scaling: vCPUs, ports, ENIs, and/or GPUs. When new tasks are placed the capacity provider
+ensures that the cluster has enough capacity.
 
 ### Database
 
@@ -170,17 +176,16 @@ If the stack has already been deployed and you have a state on your remote backe
     terraform destroy --var-file=terraform.prod.tfvars
 ```
 
-During the destroy phase of the `cluster` stack, is necessary to terminate ASG instances manually. With Protection from scale-in enabled Terraform and the ASG will not terminate the instance automatically. This behavior is expected and a manual action is necessary.  
+During the destroy phase of the `cluster` stack, is necessary to terminate ASG instances manually. With Protection from scale-in enabled Terraform and the ASG will not terminate the instance automatically. This behavior is expected and manual action is required.  
 The manual action can be replaced with a local-exec during the destroy phase, but I consider it risky.
 My advice is to terminate instances when terraform will start destroying `aws_ecs_cluster.ecs_wordpress`.
 
 ## Missing Points
 
 1. Deployment or ARM architectures
-2. Reduce WordPress image size
-3. Custom domain and SSL
-4. Static assets with S3
-5. Monitoring and Alerting
-6. Backup and restore (EFS)
-7. Better NGINX configuration
-8. Autoscaling Elasticache replication nodes
+2. Custom domain and SSL
+3. Static assets with S3
+4. Monitoring and Alerting
+5. Backup and restore (EFS)
+6. Better NGINX configuration
+7. Autoscaling Elasticache replication nodes
