@@ -1,9 +1,9 @@
 
-module "metric_alarm" {
+module "scale_up" {
   source  = "terraform-aws-modules/cloudwatch/aws//modules/metric-alarm"
   version = "~> 1.0"
 
-  alarm_name          = "${var.prefix}-${var.service_name}-${var.env}-ecs-alarm"
+  alarm_name          = "${var.prefix}-${var.service_name}-${var.env}-ecs-alarm-scale-up"
   alarm_description   = "CPU Metrics on ecs service ${var.service_name}"
   comparison_operator = "GreaterThanOrEqualToThreshold"
 
@@ -21,8 +21,31 @@ module "metric_alarm" {
   }
 
   alarm_actions = [aws_appautoscaling_policy.ecs_scale_up.arn]
-  ok_actions    = [aws_appautoscaling_policy.ecs_scale_down.arn]
 
+}
+
+module "scale_down" {
+  source  = "terraform-aws-modules/cloudwatch/aws//modules/metric-alarm"
+  version = "~> 1.0"
+
+  alarm_name          = "${var.prefix}-${var.service_name}-${var.env}-ecs-alarm-scale-down"
+  alarm_description   = "CPU Metrics on ecs service ${var.service_name}"
+  comparison_operator = "LessThanOrEqualToThreshold"
+
+  evaluation_periods = 2
+  threshold          = 40
+  period             = 60
+
+  namespace   = "AWS/ECS"
+  metric_name = "CPUUtilization"
+  statistic   = "Average"
+
+  dimensions = {
+    ClusterName = var.ecs_cluster_name
+    ServiceName = aws_ecs_service.service.name
+  }
+  
+  alarm_actions = [aws_appautoscaling_policy.ecs_scale_down.arn]
 }
 
 resource "aws_appautoscaling_target" "ecs_target" {
