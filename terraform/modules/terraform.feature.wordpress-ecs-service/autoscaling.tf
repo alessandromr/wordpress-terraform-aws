@@ -6,7 +6,6 @@ module "metric_alarm" {
   alarm_name          = "${var.prefix}-${var.service_name}-${var.env}-ecs-alarm"
   alarm_description   = "CPU Metrics on ecs service ${var.service_name}"
   comparison_operator = "GreaterThanOrEqualToThreshold"
-  unit                = "Count"
 
   evaluation_periods = 1
   threshold          = 75
@@ -15,6 +14,11 @@ module "metric_alarm" {
   namespace   = "AWS/ECS"
   metric_name = "CPUUtilization"
   statistic   = "Average"
+
+  dimensions = {
+    ClusterName = var.ecs_cluster_name
+    ServiceName = aws_ecs_service.service.name
+  }
 
   alarm_actions = [aws_appautoscaling_policy.ecs_scale_up.arn]
   ok_actions    = [aws_appautoscaling_policy.ecs_scale_down.arn]
