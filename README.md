@@ -17,7 +17,6 @@ Docker images are stored in an AWS ECR repository created with the first stack `
 ### Image Push
 
 ```bash
-
 #wordpress
 cd ./application/wordpress
 aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 629528675260.dkr.ecr.eu-west-1.amazonaws.com
@@ -177,7 +176,7 @@ If the stack has already been deployed and you have a state on your remote backe
 ```
 
 During the destroy phase of the `cluster` stack, is necessary to terminate ASG instances manually. With Protection from scale-in enabled Terraform and the ASG will not terminate the instance automatically. This behavior is expected and manual action is required.  
-The manual action can be replaced with a local-exec during the destroy phase, but I consider it risky.
+The manual action can be replaced with a local-exec during the destroy phase, but I consider it risky.  
 My advice is to terminate instances when terraform will start destroying `aws_ecs_cluster.ecs_wordpress`.
 
 ## Missing Points

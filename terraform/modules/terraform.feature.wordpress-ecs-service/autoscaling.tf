@@ -1,4 +1,3 @@
-
 module "scale_up" {
   source  = "terraform-aws-modules/cloudwatch/aws//modules/metric-alarm"
   version = "~> 1.0"
@@ -21,7 +20,6 @@ module "scale_up" {
   }
 
   alarm_actions = [aws_appautoscaling_policy.ecs_scale_up.arn]
-
 }
 
 module "scale_down" {
@@ -55,7 +53,6 @@ resource "aws_appautoscaling_target" "ecs_target" {
   scalable_dimension = "ecs:service:DesiredCount"
   service_namespace  = "ecs"
 }
-
 
 resource "aws_appautoscaling_policy" "ecs_scale_up" {
   name               = "${var.prefix}-${var.service_name}-${var.env}-ecs-scale_up"
